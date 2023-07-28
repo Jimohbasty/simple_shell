@@ -1,7 +1,8 @@
 #include "shell.h"
 
-// Locates
-
+/**
+ **_strchr - locates a character in a string
+ */
 char *_strchr(char *s, char c)
 {
 	do {
@@ -12,23 +13,24 @@ char *_strchr(char *s, char c)
 	return (NULL);
 }
 
-// copies
-
-char *_strncpy(char *dest, char *src, int n)
+/**
+ **_strncpy - copies a string
+ */
+char *_strncpy(char *dest, char *src, int num)
 {
 	int i, j;
 	char *s = dest;
 
 	i = 0;
-	while (src[i] != '\0' && i < n - 1)
+	while (src[i] != '\0' && i < num - 1)
 	{
 		dest[i] = src[i];
 		i++;
 	}
-	if (i < n)
+	if (i < num)
 	{
 		j = i;
-		while (j < n)
+		while (j < num)
 		{
 			dest[j] = '\0';
 			j++;
@@ -37,9 +39,10 @@ char *_strncpy(char *dest, char *src, int n)
 	return (s);
 }
 
-// Concatenate
-
-char *_strncat(char *dest, char *src, int n)
+/**
+ **_strncat - concatenates two strings
+ */
+char *_strncat(char *dest, char *src, int num)
 {
 	int i, j;
 	char *s = dest;
@@ -48,13 +51,13 @@ char *_strncat(char *dest, char *src, int n)
 	j = 0;
 	while (dest[i] != '\0')
 		i++;
-	while (src[j] != '\0' && j < n)
+	while (src[j] != '\0' && j < num)
 	{
 		dest[i] = src[j];
 		i++;
 		j++;
 	}
-	if (j < n)
+	if (j < num)
 		dest[i] = '\0';
 	return (s);
 }

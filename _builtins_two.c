@@ -1,8 +1,9 @@
 #include "shell.h"
 
-// Alias of builtin
-
-int _myalias(info_t *info)
+/**
+ * __alias - mimics the alias builtin (man alias)
+ */
+int __alias(info_t *info)
 {
 	int i = 0;
 	char *p = NULL;
@@ -30,23 +31,9 @@ int _myalias(info_t *info)
 	return (0);
 }
 
-int print_alias(list_t *node)
-{
-	char *p = NULL, *a = NULL;
-
-	if (node)
-	{
-		p = _strchr(node->str, '=');
-		for (a = node->str; a <= p; a++)
-		_putchar(*a);
-		_putchar('\'');
-		_puts(p + 1);
-		_puts("'\n");
-		return (0);
-	}
-	return (1);
-}
-
+/**
+ * set_alias - sets alias to string
+ */
 int set_alias(info_t *info, char *str)
 {
 	char *p;
@@ -61,24 +48,51 @@ int set_alias(info_t *info, char *str)
 	return (add_node_end(&(info->alias), str, 0) == NULL);
 }
 
-int _myhistory(info_t *info)
+/**
+ * print_alias - prints an alias string
+ */
+int print_alias(list_t *alias_node)
 {
-	print_list(info->history);
-	return (0);
+	char *p = NULL, *a = NULL;
+
+	if (alias_node)
+	{
+		p = _strchr(alias_node->str, '=');
+		for (a = alias_node->str; a <= p; a++)
+			_putchar(*a);
+		_putchar('\'');
+		_puts(p + 1);
+		_puts("'\n");
+		return (0);
+	}
+	return (1);
 }
 
+/**
+ * unset_alias - un-sets alias to string
+ */
 int unset_alias(info_t *info, char *str)
 {
 	char *p, c;
-	int ret;
+	int ret_val;
 
 	p = _strchr(str, '=');
 	if (!p)
 		return (1);
 	c = *p;
 	*p = 0;
-	ret = delete_node_at_index(&(info->alias),
-		get_node_index(info->alias, node_starts_with(info->alias, str, -1)));
+	ret_val = delete_node_at_index(&(info->alias),
+					  get_node_at_index(info->alias,
+							    node_starts_with(info->alias, str, -1)));
 	*p = c;
-	return (ret);
+	return (ret_val);
+}
+
+/**
+ * __history - displays the history list
+ */
+int __history(info_t *info)
+{
+	print_list(info->history);
+	return (0);
 }

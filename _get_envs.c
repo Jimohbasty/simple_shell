@@ -1,6 +1,8 @@
 #include "shell.h"
 
-// Initialize
+/**
+ * _setenv - Initialize a new environment variable
+ */
 
 int _setenv(info_t *info, char *var, char *value)
 {
@@ -36,33 +38,21 @@ int _setenv(info_t *info, char *var, char *value)
 	return (0);
 }
 
-// get env
-
-char **get_environ(info_t *info)
-{
-	if (!info->environ || info->env_changed)
-	{
-		info->environ = list_to_strings(info->env);
-		info->env_changed = 0;
-	}
-
-	return (info->environ);
-}
-
-// Remove
-
-int _unsetenv(info_t *info, char *var)
+/**
+ * _unsetenv - Remove an environment variable
+ */
+int _unsetenv(info_t *info, char *var_props)
 {
 	list_t *node = info->env;
 	size_t i = 0;
 	char *p;
 
-	if (!node || !var)
+	if (!node || !var_props)
 		return (0);
 
 	while (node)
 	{
-		p = starts_with(node->str, var);
+		p = starts_with(node->str, var_props);
 		if (p && *p == '=')
 		{
 			info->env_changed = delete_node_at_index(&(info->env), i);
@@ -74,4 +64,18 @@ int _unsetenv(info_t *info, char *var)
 		i++;
 	}
 	return (info->env_changed);
+}
+
+/**
+ * get_environ - returns the copy of
+ */
+char **get_environ(info_t *info)
+{
+	if (!info->environ || info->env_changed)
+	{
+		info->environ = list_to_strings(info->env);
+		info->env_changed = 0;
+	}
+
+	return (info->environ);
 }
