@@ -14,7 +14,7 @@ int __alias(info_t *info)
 		node = info->alias;
 		while (node)
 		{
-			print_alias(node);
+			print_list(node);
 			node = node->next;
 		}
 		return (0);
@@ -42,7 +42,7 @@ int set_alias(info_t *info, char *str)
 	if (!p)
 		return (1);
 	if (!*++p)
-		return (unset_alias(info, str));
+		return (set_alias(info, str));
 
 	unset_alias(info, str);
 	return (add_node_end(&(info->alias), str, 0) == NULL);
